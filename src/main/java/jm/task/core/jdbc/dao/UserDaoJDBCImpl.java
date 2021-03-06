@@ -3,11 +3,13 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
     Connection connection;
     public UserDaoJDBCImpl() {
+
         connection = new Util().connect();
     }
     public void createUsersTable() {
@@ -17,25 +19,22 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
     public void dropUsersTable() {
-
         try {
             connection.createStatement().executeUpdate("DROP TABLE IF EXISTS users");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
     public void saveUser(String name, String lastName, byte age) {
         try {
-            connection.createStatement().executeUpdate("INSERT INTO users(name, lastname, age) VALUES ('"
-                    + name + "', '"
-                    + lastName + "', "
-                    + age + ")");
-
-            System.out.printf("User с именем – %s добавлен в базу данных" + '\n', name);
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users(name, lastname, age) VALUES (?, ?, ?);");
+            preparedStatement.setString(1,name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setByte(3, age);
+            preparedStatement.executeUpdate();
+            System.out.println("User с именем – добавлен в базу данных" + name);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,21 +46,20 @@ public class UserDaoJDBCImpl implements UserDao {
             e.printStackTrace();
         }
     }
-
     public List<User> getAllUsers() {
-
+        List<User> arrayList= new ArrayList<>();
         ResultSet rs;
         try {
-            rs = connection.createStatement().executeQuery("SELECT * FROM users");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users;");
+            rs = preparedStatement.executeQuery();
             while (rs.next()){
-                getAllUsers().add(new User(rs.getString(2), rs.getString(3), rs.getByte(4)));
+                arrayList.add(new User(rs.getString(2), rs.getString(3), rs.getByte(4)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return  arrayList;
     }
-
     public void cleanUsersTable() {
 
         try {
@@ -70,5 +68,4 @@ public class UserDaoJDBCImpl implements UserDao {
             e.printStackTrace();
         }
     }
-
 }

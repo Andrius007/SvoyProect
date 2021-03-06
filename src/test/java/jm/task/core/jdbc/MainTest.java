@@ -1,7 +1,9 @@
 package jm.task.core.jdbc;
 
-import static org.junit.Assert.*;
+import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.UserServiceImpl;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class MainTest {
-
-}
+import java.util.List;

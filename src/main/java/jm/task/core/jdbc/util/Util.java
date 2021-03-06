@@ -7,20 +7,23 @@ import java.sql.Statement;
 
 public class Util {
     private static final String DRIVER= "jdbc:mariadb://localhost:3306/database123";
-    private static final String URL =  "jdbc:mysql://localhost:3306/database123?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true";
+    private static final String URL =  "jdbc:mysql://localhost:3306/database123?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    Connection connection= null;
+     private static Connection connection= null;
 
-    public Connection connect() {
+    public Util() {
+    }
+
+    public static Connection connect() {
 
         try {
-            Class.forName(DRIVER);
+            //Class.forName(DRIVER);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("Соединение установлено");
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;
