@@ -6,26 +6,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Util {
-    private static final String URL = "jdbc:mariadb://localhost:3306/database123";
-    private static final String URLFIXED =  "jdbc:mysql://localhost:3306/database123?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true";
+    private static final String DRIVER= "jdbc:mariadb://localhost:3306/database123";
+    private static final String URL =  "jdbc:mysql://localhost:3306/database123?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    private static Connection connection;
-
-    public Util() {
-    }
-
-    public static Connection getUtilConnection() { // геттер приватного поля connection + создаем connection
-        try {
-            connection = DriverManager.getConnection(URLFIXED, USERNAME, PASSWORD);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return connection;
-    }
+    Connection connection= null;
 
     public Connection connect() {
-        return null;
+
+        try {
+            Class.forName(DRIVER);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("Соединение установлено");
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
     }
 }
