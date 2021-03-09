@@ -1,31 +1,44 @@
 package jm.task.core.jdbc.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import jm.task.core.jdbc.model.User;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+
+
 
 public class Util {
-    private static final String DRIVER= "jdbc:mariadb://localhost:3306/database123";
-    private static final String URL =  "jdbc:mysql://localhost:3306/database123?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static SessionFactory sessionFactory;
 
-     private static Connection connection= null;
-
-    public Util() {
-    }
-
-    public static Connection connect() {
-
+    public static SessionFactory getSessionFactory() {
         try {
-            //Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("Соединение установлено");
+            // Настройки hibernate
+            Configuration configuration = new Configuration()
+                    .setProperty( "hibernate.connection.driver_class",
+                            "com.mysql.cj.jdbc.Driver" )
+                    .setProperty( "hibernate.connection.url",
+                            "jdbc:mysql://localhost:3306/database123?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC")
+                    .setProperty( "hibernate.connection.username",
+                            "bestuser" )
+                    .setProperty( "hibernate.connection.password",
+                            "bestuser" )
+                    .setProperty( "hibernate.dialect",
+                            "org.hibernate.dialect.MySQLDialect" )
+                    .setProperty( "hibernate.show_sql","true" )
+                    .setProperty( "hibernate.current_session_context_class",
+                            "thread" )
+                    .setProperty("hibernate.hbm2ddl.auto", "update")
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+                    .addPackage( "ru.mysql.db" )
+                    .addAnnotatedClass(User.class);
+
+            StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties());
+            sessionFactory = configuration.buildSessionFactory(registryBuilder.build());
+        } catch (Exception e) {
+            System.out.println("Исключение! sessionFactory" + e);
         }
-        return connection;
+        return sessionFactory;
     }
 }
