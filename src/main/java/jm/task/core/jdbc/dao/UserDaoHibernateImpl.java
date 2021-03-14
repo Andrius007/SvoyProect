@@ -40,7 +40,6 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createSQLQuery("DROP TABLE IF EXISTS users;").executeUpdate();
             session.getTransaction().commit();
             session.close();
-
     }
 
     @Override
@@ -55,11 +54,10 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        Session session;
 
-            session = sessionFactory.openSession();
+            Session session = Util.getSessionFactory().openSession();
             session.beginTransaction();
-            session.createQuery("DELETE FROM users WHERE id= :id")
+            session.createQuery("DELETE FROM User WHERE id= :id")
                     .setParameter("id", id)
                     .executeUpdate();
 

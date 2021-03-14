@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="com.mysql.cj.jdbc.Driver">
+  <library name="Maven: org.hibernate.common:hibernate-commons-annotations:4.0.5.Final">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/common/hibernate-commons-annotations/4.0.5.Final/hibernate-commons-annotations-4.0.5.Final.jar!/" />
     </CLASSES>

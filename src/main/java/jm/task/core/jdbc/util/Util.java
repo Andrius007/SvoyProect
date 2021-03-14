@@ -19,9 +19,9 @@ public class Util {
                     .setProperty( "hibernate.connection.url",
                             "jdbc:mysql://localhost:3306/database123?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC" )
                     .setProperty( "hibernate.connection.username",
-                            "best" )
+                            "root" )
                     .setProperty( "hibernate.connection.password",
-                            "best" )
+                            "root" )
                     .setProperty( "hibernate.dialect",
                             "org.hibernate.dialect.MySQLDialect" )
                     .setProperty( "hibernate.show_sql","true" )
