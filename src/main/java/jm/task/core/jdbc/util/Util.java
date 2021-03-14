@@ -7,7 +7,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 
-
 public class Util {
     private static SessionFactory sessionFactory;
 
@@ -16,13 +15,13 @@ public class Util {
             // Настройки hibernate
             Configuration configuration = new Configuration()
                     .setProperty( "hibernate.connection.driver_class",
-                            "com.mysql.cj.jdbc.Driver" )
+                            "com.mysql.jdbc.Driver" )
                     .setProperty( "hibernate.connection.url",
-                            "jdbc:mysql://localhost:3306/database123?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC")
+                            "jdbc:mysql://localhost:3306/database123?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC" )
                     .setProperty( "hibernate.connection.username",
-                            "bestuser" )
+                            "best" )
                     .setProperty( "hibernate.connection.password",
-                            "bestuser" )
+                            "best" )
                     .setProperty( "hibernate.dialect",
                             "org.hibernate.dialect.MySQLDialect" )
                     .setProperty( "hibernate.show_sql","true" )
@@ -42,3 +41,6 @@ public class Util {
         return sessionFactory;
     }
 }
+
+
+
