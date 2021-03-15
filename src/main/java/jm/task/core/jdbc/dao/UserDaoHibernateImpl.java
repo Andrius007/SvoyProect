@@ -3,7 +3,6 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -68,16 +67,11 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        try {
-            Session session = sessionFactory.openSession();
-            session.beginTransaction();
-            users = session.createQuery("FROM User").list();
-
-            session.getTransaction().commit();
-            session.close();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        users = session.createQuery("FROM User").list();
+        session.getTransaction().commit();
+        session.close();
         return users;
     }
 
@@ -86,7 +80,6 @@ public class UserDaoHibernateImpl implements UserDao {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.createSQLQuery("TRUNCATE TABLE users;").executeUpdate();
-
         session.getTransaction().commit();
         session.close();
     }
